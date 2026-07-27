@@ -1,135 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Run Script</title>
-
-<style>
-body{
-    margin:0;
-    background:#050505;
-    color:#7dd3fc;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    overflow:hidden;
-}
-
-#dialog{
-    width:340px;
-    background:#111;
-    border:1px solid #38bdf8;
-    border-radius:18px;
-    padding:28px;
-    box-shadow:0 0 30px rgba(56,189,248,.35);
-    text-align:center;
-}
-
-h2{
-    margin-top:0;
-    color:#7dd3fc;
-}
-
-p{
-    color:#c7f1ff;
-}
-
-button{
-    margin:10px;
-    width:120px;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    font-size:16px;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.yes{
-    background:#38bdf8;
-    color:black;
-}
-
-.no{
-    background:#222;
-    color:white;
-}
-
-button:hover{
-    transform:scale(1.05);
-}
-
-#terminal{
-    display:none;
-    width:100%;
-    height:100%;
-    padding:20px;
-    box-sizing:border-box;
-    background:black;
-    color:#66d9ff;
-    font-family:monospace;
-    font-size:17px;
-    white-space:pre-wrap;
-}
-</style>
-</head>
-
-<body>
-
-<div id="dialog">
-<h2>Run the script?</h2>
-<p>This action will execute a script.</p>
-
-<button class="yes" onclick="runFakeHack()">Yes</button>
-<button class="no" onclick="closePage()">No</button>
-</div>
-
-<div id="terminal"></div>
-
-<script>
-
-function closePage(){
-    window.close();
-}
-
 function runFakeHack(){
 
 document.getElementById("dialog").style.display="none";
+
 let term=document.getElementById("terminal");
 term.style.display="block";
 
 const lines=[
 "[ OK ] Initializing...",
 "[ OK ] Loading modules...",
-"[ OK ] Connecting...",
-"[ OK ] Verifying access...",
-"[ OK ] Synchronizing...",
-"[ OK ] Downloading data...",
-"[ OK ] Encrypting...",
-"[ OK ] Upload complete.",
 "",
-"Simulation Complete."
+"Installing Client...",
+"Extracting Client...",
+"Waiting for client...",
+"Client Opened.",
+"",
+"Client Closed."
 ];
 
 let i=0;
 
 function next(){
-    if(i<lines.length){
-        term.textContent+=lines[i]+"\n";
-        term.scrollTop=term.scrollHeight;
+    if(i < lines.length){
+        term.textContent += lines[i] + "\n";
+        term.scrollTop = term.scrollHeight;
         i++;
-        setTimeout(next,500);
+        setTimeout(next,1200);
+    } else {
+        setTimeout(() => {
+            window.close();
+
+            // If the web view doesn't allow closing,
+            // show a finished message instead.
+            term.textContent += "\nFinished.\nYou may now close this window.";
+        },1000);
     }
 }
 
 next();
 
 }
-
-</script>
-
-</body>
-</html>
